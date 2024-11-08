@@ -61,11 +61,12 @@ class ForgotPasswordController extends Controller
     if($tokenPresent && Carbon::now()->subMinutes(1)>$tokenPresent->createdAt){
         return redirect(route('forgot'))->with('error','Token has expired');
     }
+    // create
     else{
         $user_id = $tokenPresent->user_id;
         $user = User::where('id',$user_id)->first();
         $user->password= Hash::make($request->password);
-        $user->save();
+        $user-> save();
         return redirect(route('login'))->with('success','Password changed successfully');
     }
    }
